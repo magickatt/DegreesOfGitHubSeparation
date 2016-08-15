@@ -16,11 +16,9 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8082
   config.vm.network "forwarded_port", guest: 443, host: 8083
 
-  # ElasticSearch
-  config.vm.network "forwarded_port", guest: 9200, host: 9200
-
-  # Redis
-  config.vm.network "forwarded_port", guest: 6379, host: 6379
+  # Neo4j
+  config.vm.network "forwarded_port", guest: 7474, host: 7474
+  config.vm.network "forwarded_port", guest: 7687, host: 7687
 
   # Enable provisioning with a shell script
   config.vm.provision "file", source: "apache.conf", destination: "/tmp/separation.conf"
