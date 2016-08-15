@@ -1,0 +1,13 @@
+{
+    "require": {
+        "silex/silex": "2.0.*",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "require-dev": {
+        "behat/behat": "3.0.*",
+        "phpunit/phpunit": "4.8.*"
+    },
+    "config": {
+        "bin-dir": "bin/"
+    }
+}
