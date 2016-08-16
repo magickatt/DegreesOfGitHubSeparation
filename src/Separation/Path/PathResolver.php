@@ -83,6 +83,11 @@ class PathResolver
         throw new NoPathException('Path could not be found between '.$user1.' and '.$user2);
     }
 
+    /**
+     * Find contributors of a repository and then find their repositories while storing these relationships
+     * @param Sequence $currentRepositories
+     * @return Map
+     */
     private function findContributorsAndTheirRepositories(Sequence $currentRepositories)
     {
         $nextRepositories = new Map();
@@ -97,7 +102,6 @@ class PathResolver
                 try {
                     $nextRepositories->set($user->getUsername(), $this->findRepositoriesForUserAndStore($user));
                 } catch (NoRepositoriesException $exception) {
-                    // Assuming there will be at least 1 user with repositories (if not NoPathException applies)
                     continue;
                 }
             }
