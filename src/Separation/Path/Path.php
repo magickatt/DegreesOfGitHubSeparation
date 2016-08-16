@@ -29,4 +29,14 @@ class Path
     {
         return $this->repositories;
     }
+
+    public function getUser1()
+    {
+        return $this->user1;
+    }
+
+    public function getUser2()
+    {
+        return $this->user2;
+    }
 }

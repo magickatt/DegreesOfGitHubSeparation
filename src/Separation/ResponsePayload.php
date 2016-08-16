@@ -22,7 +22,8 @@ class ResponsePayload
                 'path' => $this->formatPath($this->path->getRepositories())
             ],
             'metadata' => [
-
+                'user1' => $this->path->getUser1()->getUsername(),
+                'user2' => $this->path->getUser2()->getUsername()
             ]
         ];
     }
