@@ -24,4 +24,9 @@ class Path
     {
         return count($this->repositories);
     }
+
+    public function getRepositories()
+    {
+        return $this->repositories;
+    }
 }

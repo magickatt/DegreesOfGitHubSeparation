@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Separation;
+namespace spec\Separation\Path;
 
 use PhpCollection\Sequence;
 use Separation\Path\Path;
@@ -25,5 +25,10 @@ class PathSpec extends ObjectBehavior
     function it_should_know_the_distance_between_both_users()
     {
         $this->shortestDistance()->shouldReturn(1);
+    }
+
+    function it_should_know_which_repositories_are_in_the_path()
+    {
+        $this->getRepositories()->shouldBeAnInstanceOf('PhpCollection\Sequence');
     }
 }
