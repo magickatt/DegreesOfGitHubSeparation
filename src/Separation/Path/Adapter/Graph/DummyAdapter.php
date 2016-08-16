@@ -10,7 +10,7 @@ class DummyAdapter implements AdapterInterface
 {
     public function doesUserExist(User $user)
     {
-        if ($user->getUsername() == 'seldaek') {
+        if ($user->getLowerCaseUsername() == 'seldaek') {
             return true;
         }
     }
@@ -22,7 +22,7 @@ class DummyAdapter implements AdapterInterface
 
     public function getShortestPathOfRepositoriesBetweenUsers(User $user1, User $user2)
     {
-        if ($user1->getUsername() == 'stof' && $user2->getUsername() == 'seldaek') {
+        if (strcmp($user1->getLowerCaseUsername(), 'stof') == 0 && strcmp($user2->getLowerCaseUsername(), 'seldaek') == 0) {
             return new Sequence([new Repository('stof/monolog')]);
         }
         return new Sequence();

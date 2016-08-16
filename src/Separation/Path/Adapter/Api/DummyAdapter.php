@@ -57,7 +57,7 @@ class DummyAdapter implements AdapterInterface
     private function loadContributorDataFromFilesystem(Repository $repository)
     {
         $repositoryNameParts = explode('/', $repository->getName());
-        $userLogin = $repositoryNameParts[0];
+        $userLogin = strtolower($repositoryNameParts[0]);
         $repositoryName = $repositoryNameParts[1];
 
         $filename = $this->resolveDataDirectory().'data'.DIRECTORY_SEPARATOR.'dummy'.DIRECTORY_SEPARATOR.
@@ -74,7 +74,7 @@ class DummyAdapter implements AdapterInterface
     private function loadRepositoryDataFromFilesystem(User $user)
     {
         $filename = $this->resolveDataDirectory().'data'.DIRECTORY_SEPARATOR.'dummy'.DIRECTORY_SEPARATOR.
-            $user->getUsername().DIRECTORY_SEPARATOR.'repos.json';
+            $user->getLowerCaseUsername().DIRECTORY_SEPARATOR.'repos.json';
 
         if (!file_exists($filename)) {
             return;

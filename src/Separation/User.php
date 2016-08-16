@@ -34,4 +34,9 @@ class User
     {
         return $this->username;
     }
+
+    public function getLowerCaseUsername()
+    {
+        return strtolower($this->username);
+    }
 }

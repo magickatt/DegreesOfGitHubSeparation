@@ -8,7 +8,7 @@ use Prophecy\Argument;
 
 class UserSpec extends ObjectBehavior
 {
-    private $username = 'archer';
+    private $username = 'Archer';
 
     function let()
     {
@@ -19,4 +19,10 @@ class UserSpec extends ObjectBehavior
     {
         $this->getUsername()->shouldReturn($this->username);
     }
+
+    function it_should_return_a_lower_case_username()
+    {
+        $this->getLowerCaseUsername()->shouldReturn(strtolower($this->username));
+    }
+
 }
