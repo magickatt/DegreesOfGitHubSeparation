@@ -1,8 +1,9 @@
 <?php
 
-namespace Separation\Path;
+namespace Separation\Path\Factory;
 
 use PhpCollection\Sequence;
+use Separation\Path\Path;
 use Separation\User;
 
 class PathFactory

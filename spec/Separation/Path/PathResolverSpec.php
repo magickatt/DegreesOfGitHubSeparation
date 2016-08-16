@@ -6,7 +6,7 @@ use PhpCollection\Sequence;
 use Separation\Path\Adapter\Api\AdapterInterface as ApiAdapterInterface;
 use Separation\Path\Adapter\Graph\AdapterInterface as GraphAdapterInterface;
 use Separation\Path\Path;
-use Separation\Path\PathFactory;
+use Separation\Path\Factory\PathFactory;
 use Separation\Path\PathResolver;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

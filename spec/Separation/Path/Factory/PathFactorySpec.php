@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Separation\Path;
+namespace spec\Separation\Path\Factory;
 
 use PhpCollection\Sequence;
-use Separation\Path\PathFactory;
+use Separation\Path\Factory\PathFactory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Separation\Repository;
@@ -11,11 +11,6 @@ use Separation\User;
 
 class PathFactorySpec extends ObjectBehavior
 {
-    function it_is_initializable()
-    {
-        $this->shouldHaveType(PathFactory::class);
-    }
-
     function it_should_create_a_path()
     {
         $this->create(

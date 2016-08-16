@@ -5,7 +5,7 @@ namespace Separation\Path\Adapter\Graph;
 use PhpCollection\Sequence;
 use Separation\User;
 
-class DummyAdapter implements AdapterInterface
+class Neo4jAdapter implements AdapterInterface
 {
     public function doesUserExist(User $user)
     {
