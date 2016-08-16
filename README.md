@@ -31,7 +31,7 @@ To access the API from outside the VM please use the forwarded port 9080
 
     curl -X GET "http://localhost:9080/separation/[User1]/[User2]"
     
-Currently only the following endpoint returns a successful response
+Currently only the following call returns a successful response
 
     curl -X GET  http://localhost:9080/separation/Stof/Seldaek
     
