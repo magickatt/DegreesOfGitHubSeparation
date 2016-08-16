@@ -10,12 +10,14 @@ This project uses Vagrant to provision a Virtual Machine (VM) to run the applica
 
 Please install the Silex micro framework and other dependencies this projects requires using Composer from /var/www within the VM
 
+    cd /var/www
     composer install
     
 ## Tests
 
 PhpSpec and Behat are using to test the application on a unit and behavioural level. Please run the tests within the VM from /var/www
 
+    cd /var/www
     bin/phpspec run
     bin/behat
 
@@ -23,7 +25,11 @@ PhpSpec and Behat are using to test the application on a unit and behavioural le
 
 This API has a single endpoint which takes 2 GitHub users within the URI
 
-    curl -X GET "http://localhost:8082/separation/[User1]/[User2]"
+    curl -X GET "http://localhost/separation/[User1]/[User2]"
+    
+To access the API from outside the VM please use the forwarded port 9080
+
+    curl -X GET "http://localhost:9080/separation/[User1]/[User2]"
     
 This should return a response either showing the path and distance between the users
 

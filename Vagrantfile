@@ -13,8 +13,7 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "./", "/var/www", id: "vagrant-root"
 
   # Apache
-  config.vm.network "forwarded_port", guest: 80, host: 8082
-  config.vm.network "forwarded_port", guest: 443, host: 8083
+  config.vm.network "forwarded_port", guest: 80, host: 9080
 
   # Neo4j
   config.vm.network "forwarded_port", guest: 7474, host: 7474
