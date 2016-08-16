@@ -3,7 +3,7 @@
 namespace spec\Separation;
 
 use PhpCollection\Sequence;
-use Separation\Path;
+use Separation\Path\Path;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Separation\Repository;

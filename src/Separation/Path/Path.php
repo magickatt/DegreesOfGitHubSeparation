@@ -1,8 +1,9 @@
 <?php
 
-namespace Separation;
+namespace Separation\Path;
 
 use PhpCollection\Sequence;
+use Separation\User;
 
 class Path
 {

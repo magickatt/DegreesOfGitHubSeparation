@@ -7,6 +7,9 @@ class Repository
     /** @var string */
     private $name;
 
+    /** @var array */
+    private $users = [];
+
     /**
      * @return string
      */
@@ -33,5 +36,15 @@ class Repository
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setContributors(array $users)
+    {
+        $this->users = $users;
+    }
+
+    public function getContributors()
+    {
+        return $this->users;
     }
 }
