@@ -8,6 +8,9 @@ use Separation\User;
 
 class DummyAdapter implements AdapterInterface
 {
+    /**
+     * @inheritdoc
+     */
     public function doesUserExist(User $user)
     {
         if ($user->getLowerCaseUsername() == 'seldaek') {

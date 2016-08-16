@@ -7,13 +7,21 @@ use Separation\Path\Path;
 
 class ResponsePayload implements PayloadInterface
 {
+    /** @var Path */
     private $path;
 
+    /**
+     * ResponsePayload constructor
+     * @param Path $path
+     */
     public function __construct(Path $path)
     {
         $this->path = $path;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function generatePayload()
     {
         return [
@@ -28,6 +36,11 @@ class ResponsePayload implements PayloadInterface
         ];
     }
 
+    /**
+     * Format path to be displayed in the payload
+     * @param Sequence $repositories
+     * @return array
+     */
     private function formatPath(Sequence $repositories)
     {
         $path = [];

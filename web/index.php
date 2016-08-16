@@ -4,23 +4,19 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Separation\User;
 use Separation\Path\PathResolver;
 use Separation\Path\Adapter\Api\DummyAdapter as DummyApiAdapter;
 use Separation\Path\Adapter\Graph\DummyAdapter as DummyGraphAdapter;
 use Separation\Path\Factory\PathFactory;
 use Separation\Path\Factory\UserFactory;
 use Separation\Path\Factory\RepositoryFactory;
-use Separation\User;
+use Separation\Path\Exception\PathException;
 use Separation\Payload\ResponsePayload;
 use Separation\Payload\ErrorPayload;
-use Separation\Path\Exception\PathException;
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 $application = new Silex\Application();
-$application['debug'] = true;
+$application['debug'] = false;
 
 /**
  * Endpoint for calculate the shortest distance by project between any 2 GitHub contributors

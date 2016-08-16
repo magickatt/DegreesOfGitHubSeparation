@@ -15,14 +15,24 @@ use Separation\User;
 
 class PathResolver
 {
+    /** @var int */
     private $maximumTraversalDepth = 10;
 
+    /** @var ApiAdapterInterface */
     private $apiAdapter;
 
+    /** @var GraphAdapterInterface */
     private $graphAdapter;
 
+    /** @var PathFactory */
     private $pathFactory;
 
+    /**
+     * PathResolver constructor
+     * @param ApiAdapterInterface $apiAdapter
+     * @param GraphAdapterInterface $graphAdapter
+     * @param PathFactory $pathFactory
+     */
     public function __construct(ApiAdapterInterface $apiAdapter, GraphAdapterInterface $graphAdapter, PathFactory $pathFactory)
     {
         $this->apiAdapter = $apiAdapter;
@@ -30,12 +40,26 @@ class PathResolver
         $this->pathFactory = $pathFactory;
     }
 
+    /**
+     * Resolve a path of repositories between 2 given users
+     * @param User $user1
+     * @param User $user2
+     * @return Path
+     */
     public function resolvePathBetweenUsers(User $user1, User $user2)
     {
         $repositories = $this->traverseUsersAndRepositoriesToFindShortestPath($user1, $user2);
         return $this->pathFactory->create($user1, $user2, $repositories);
     }
 
+    /**
+     * Traverse users (starting from user1) until first instance of user2 as a contributed has been located
+     * @param User $user1
+     * @param User $user2
+     * @return Path|null
+     * @throws MaximumDepthException
+     * @throws NoPathException
+     */
     private function traverseUsersAndRepositoriesToFindShortestPath(User $user1, User $user2)
     {
         $depth = 0;
@@ -76,6 +100,12 @@ class PathResolver
         throw new NoPathException('Path could not be found between '.$user1.' and '.$user2);
     }
 
+    /**
+     * Find repositories belonging to a given user and store these relationships
+     * @param User $user
+     * @return Sequence
+     * @throws NoRepositoriesException
+     */
     private function findRepositoriesForUserAndStore(User $user)
     {
         $repositories = $this->apiAdapter->getRepositoriesForUser($user);
@@ -88,6 +118,12 @@ class PathResolver
     }
 
     /**
+     * Flatten the next iteration of repositories to traverse
+     *
+     * Idea was to traverse nodes horizontally (instead of hitting maximum depth on each branch before progressing)
+     * to prevent performance degrading exponentially if maximum depth was increased. To increase performance using a
+     * graphing database as storage could delay the user2 query until all relationships have been stored
+     *
      * @todo Dedupe repositories at reduction time
      * @param Map $map
      * @return Sequence

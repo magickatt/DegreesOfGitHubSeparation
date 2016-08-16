@@ -8,13 +8,21 @@ use Separation\Path\Path;
 
 class ErrorPayload implements PayloadInterface
 {
+    /** @var PathException */
     private $exception;
 
+    /**
+     * ErrorPayload constructor
+     * @param PathException $exception
+     */
     public function __construct(PathException $exception)
     {
         $this->exception = $exception;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function generatePayload()
     {
         return [

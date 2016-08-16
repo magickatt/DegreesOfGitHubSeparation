@@ -10,10 +10,15 @@ use Separation\User;
 
 class DummyAdapter implements AdapterInterface
 {
+    /** @var UserFactory */
     private $userFactory;
 
+    /** @var RepositoryFactory */
     private $repositoryFactory;
 
+    /**
+     * @inheritdoc
+     */
     public function __construct(UserFactory $userFactory, RepositoryFactory $repositoryFactory)
     {
         $this->userFactory = $userFactory;
@@ -21,8 +26,7 @@ class DummyAdapter implements AdapterInterface
     }
 
     /**
-     * @param User $user
-     * @return Sequence
+     * @inheritdoc
      */
     public function getRepositoriesForUser(User $user)
     {
@@ -41,6 +45,11 @@ class DummyAdapter implements AdapterInterface
         return $repositories;
     }
 
+    /**
+     * Get users that have contributed to a given repository
+     * @param Repository $repository
+     * @return Sequence
+     */
     public function getContributorsForRepository(Repository $repository)
     {
         $users = new Sequence();
@@ -58,6 +67,11 @@ class DummyAdapter implements AdapterInterface
         return $users;
     }
 
+    /**
+     * Dummy JSON decoding
+     * @param Repository $repository
+     * @return array|null
+     */
     private function loadContributorDataFromFilesystem(Repository $repository)
     {
         $repositoryNameParts = explode('/', $repository->getName());
@@ -75,6 +89,11 @@ class DummyAdapter implements AdapterInterface
         return json_decode($json, true);
     }
 
+    /**
+     * Dummy JSON decoding
+     * @param User $user
+     * @return array|null
+     */
     private function loadRepositoryDataFromFilesystem(User $user)
     {
         $filename = $this->resolveDataDirectory().'data'.DIRECTORY_SEPARATOR.'dummy'.DIRECTORY_SEPARATOR.
@@ -88,6 +107,10 @@ class DummyAdapter implements AdapterInterface
         return json_decode($json, true);
     }
 
+    /**
+     * Convenience method
+     * @return string
+     */
     private function resolveDataDirectory()
     {
         return __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR;

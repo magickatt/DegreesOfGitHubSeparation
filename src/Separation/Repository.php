@@ -40,11 +40,17 @@ class Repository
         return $this->name;
     }
 
+    /**
+     * @param Sequence $users
+     */
     public function setContributors(Sequence $users)
     {
         $this->users = $users;
     }
 
+    /**
+     * @return Sequence
+     */
     public function getContributors()
     {
         return $this->users;
