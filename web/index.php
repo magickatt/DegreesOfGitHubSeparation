@@ -10,6 +10,10 @@ $application = new Silex\Application();
  * Endpoint for calculate the shortest distance by project between any 2 GitHub contributors
  */
 $application->get('/separation/{user1}/{user2}', function ($user1, $user2) {
+
+    $user1 = new \Separation\User();
+    $user2 = new \Separation\User();
+
     return "Hello $user1 and $user2";
 });
 
