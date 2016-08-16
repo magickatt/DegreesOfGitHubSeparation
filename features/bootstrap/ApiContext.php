@@ -19,6 +19,8 @@ class ApiContext implements Context, SnippetAcceptingContext
 
     private $user2;
 
+    private $payload;
+
     /**
      * @param $baseUrl
      */
@@ -50,6 +52,12 @@ class ApiContext implements Context, SnippetAcceptingContext
         );
 
         PHPUnit_Framework_Assert::assertEquals(200, $response->getStatusCode());
+
+        $content = $response->getBody()->getContents();
+        PHPUnit_Framework_Assert::assertNotEmpty($content);
+
+        $this->payload = json_decode($content, true);
+        PHPUnit_Framework_Assert::assertEquals(JSON_ERROR_NONE, json_last_error());
     }
 
     /**
@@ -57,14 +65,18 @@ class ApiContext implements Context, SnippetAcceptingContext
      */
     public function iShouldDiscoverTheDistanceIs($distance)
     {
-        throw new PendingException();
+        PHPUnit_Framework_Assert::assertArrayHasKey('data', $this->payload);
+        PHPUnit_Framework_Assert::assertArrayHasKey('distance', $this->payload['data']);
+        PHPUnit_Framework_Assert::assertEquals($distance, $this->payload['data']['distance']);
     }
 
     /**
-     * @Then I should discover that the repository path is :path
+     * @Then I should discover that the repository path contains :path
      */
-    public function iShouldDiscoverThatTheRepositoryPathIs($path)
+    public function iShouldDiscoverThatTheRepositoryPathContains($path)
     {
-        throw new PendingException();
+        PHPUnit_Framework_Assert::assertArrayHasKey('data', $this->payload);
+        PHPUnit_Framework_Assert::assertArrayHasKey('path', $this->payload['data']);
+        PHPUnit_Framework_Assert::assertContains($path, $this->payload['data']['path']);
     }
 }
