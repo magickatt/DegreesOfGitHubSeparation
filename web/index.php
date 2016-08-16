@@ -8,26 +8,35 @@ use Separation\Path\PathResolver;
 use Separation\Path\Adapter\Api\DummyAdapter as DummyApiAdapter;
 use Separation\Path\Adapter\Graph\DummyAdapter as DummyGraphAdapter;
 use Separation\Path\Factory\PathFactory;
+use Separation\Path\Factory\UserFactory;
+use Separation\Path\Factory\RepositoryFactory;
 use Separation\User;
-use Separation\ResponsePayload;
+use Separation\Payload\ResponsePayload;
+use Separation\Payload\ErrorPayload;
+use Separation\Path\Exception\PathException;
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 $application = new Silex\Application();
+$application['debug'] = true;
 
 /**
  * Endpoint for calculate the shortest distance by project between any 2 GitHub contributors
  */
 $application->get('/separation/{user1}/{user2}', function ($user1, $user2) {
 
-    $pathResolver = new PathResolver(new DummyApiAdapter(), new DummyGraphAdapter(), new PathFactory());
+    $pathResolver = new PathResolver(new DummyApiAdapter(new UserFactory(), new RepositoryFactory()), new DummyGraphAdapter(), new PathFactory());
 
     try {
         $path = $pathResolver->resolvePathBetweenUsers(new User($user1), new User($user2));
-    } catch (\Exception $exception) {
-        return new JsonResponse();
+        $payload = new ResponsePayload($path);
+    } catch (PathException $exception) {
+        $payload = new ErrorPayload($exception);
     }
 
-    $responsePayload = new ResponsePayload($path);
-    return new JsonResponse($responsePayload->generatePayload());
+    return new JsonResponse($payload->generatePayload());
 
 });
 

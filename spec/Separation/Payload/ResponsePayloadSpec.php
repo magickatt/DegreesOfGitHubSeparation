@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Separation;
+namespace spec\Separation\Payload;
 
 use PhpCollection\Sequence;
 use Separation\Path\Path;

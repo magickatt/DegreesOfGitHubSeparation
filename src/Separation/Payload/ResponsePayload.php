@@ -1,11 +1,11 @@
 <?php
 
-namespace Separation;
+namespace Separation\Payload;
 
 use PhpCollection\Sequence;
 use Separation\Path\Path;
 
-class ResponsePayload
+class ResponsePayload implements PayloadInterface
 {
     private $path;
 

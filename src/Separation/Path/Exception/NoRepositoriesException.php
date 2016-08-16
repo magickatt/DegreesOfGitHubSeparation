@@ -4,7 +4,7 @@ namespace Separation\Path\Exception;
 
 use Separation\User;
 
-class NoRepositoriesException extends \Exception
+class NoRepositoriesException extends PathException
 {
     /** @var User */
     private $user;

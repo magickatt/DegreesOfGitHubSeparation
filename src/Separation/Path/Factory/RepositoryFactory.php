@@ -6,7 +6,7 @@ use Separation\Repository;
 
 class RepositoryFactory
 {
-    const NAME_KEY = 'name';
+    const NAME_KEY = 'full_name';
 
     public function createFromData(array $data)
     {

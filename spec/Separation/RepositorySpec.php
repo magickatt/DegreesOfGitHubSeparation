@@ -24,8 +24,8 @@ class RepositorySpec extends ObjectBehavior
 
     function it_should_known_which_users_have_contributed_to_it()
     {
-        $user = new User('lana');
-        $this->setContributors([$user]);
-        $this->getContributors()->shouldContain($user);
+        $users = new Sequence([new User('archer'), new User('lana')]);
+        $this->setContributors($users);
+        $this->getContributors()->shouldBeEqualTo($users);
     }
 }

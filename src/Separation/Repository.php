@@ -2,13 +2,15 @@
 
 namespace Separation;
 
+use PhpCollection\Sequence;
+
 class Repository
 {
     /** @var string */
     private $name;
 
-    /** @var array */
-    private $users = [];
+    /** @var Sequence */
+    private $users;
 
     /**
      * @return string
@@ -38,7 +40,7 @@ class Repository
         return $this->name;
     }
 
-    public function setContributors(array $users)
+    public function setContributors(Sequence $users)
     {
         $this->users = $users;
     }

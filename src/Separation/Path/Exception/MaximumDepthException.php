@@ -2,7 +2,7 @@
 
 namespace Separation\Path\Exception;
 
-class MaximumDepthException extends \Exception
+class MaximumDepthException extends PathException
 {
     /** @var int */
     private $maximumDepth;
