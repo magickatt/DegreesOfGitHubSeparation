@@ -1,6 +1,6 @@
 <?php
 
-namespace Separation\Path\Adapter;
+namespace Separation\Path\Adapter\Api;
 
 interface AdapterInterface
 {

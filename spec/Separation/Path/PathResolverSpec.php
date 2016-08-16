@@ -3,7 +3,8 @@
 namespace spec\Separation\Path;
 
 use PhpCollection\Sequence;
-use Separation\Path\Adapter\AdapterInterface;
+use Separation\Path\Adapter\Api\AdapterInterface as ApiAdapterInterface;
+use Separation\Path\Adapter\Graph\AdapterInterface as GraphAdapterInterface;
 use Separation\Path\Path;
 use Separation\Path\PathFactory;
 use Separation\Path\PathResolver;
@@ -16,11 +17,11 @@ class PathResolverSpec extends ObjectBehavior
 {
     private $pathFactory;
 
-    function let(AdapterInterface $adapter, PathFactory $pathFactory)
+    function let(ApiAdapterInterface $apiAdapter, GraphAdapterInterface $graphAdapter, PathFactory $pathFactory)
     {
         $this->pathFactory = $pathFactory;
 
-        $this->beConstructedWith($adapter, $pathFactory);
+        $this->beConstructedWith($apiAdapter, $graphAdapter, $pathFactory);
     }
 
     function it_is_initializable()

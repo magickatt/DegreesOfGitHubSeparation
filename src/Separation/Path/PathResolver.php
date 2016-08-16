@@ -3,19 +3,23 @@
 namespace Separation\Path;
 
 use PhpCollection\Sequence;
-use Separation\Path\Adapter\AdapterInterface;
+use Separation\Path\Adapter\Api\AdapterInterface as ApiAdapterInterface;
+use Separation\Path\Adapter\Graph\AdapterInterface as GraphAdapterInterface;
 use Separation\Repository;
 use Separation\User;
 
 class PathResolver
 {
-    private $adapter;
+    private $apiAdapter;
+
+    private $graphAdapter;
 
     private $pathFactory;
 
-    public function __construct(AdapterInterface $adapter, PathFactory $pathFactory)
+    public function __construct(ApiAdapterInterface $apiAdapter, GraphAdapterInterface $graphAdapter, PathFactory $pathFactory)
     {
-        $this->adapter = $adapter;
+        $this->apiAdapter = $apiAdapter;
+        $this->graphAdapter = $graphAdapter;
         $this->pathFactory = $pathFactory;
     }
 
