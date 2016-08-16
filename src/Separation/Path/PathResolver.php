@@ -68,7 +68,7 @@ class PathResolver
             $depth++;
             $currentRepositories = $this->reduceRepositoryMapToSequence($nextRepositories);
 
-        } while (!empty($currentRepositories) && $depth <= $this->maximumTraversalDepth);
+        } while (!$currentRepositories->isEmpty() && $depth <= $this->maximumTraversalDepth);
 
         if ($depth >= $this->maximumTraversalDepth) {
             throw new MaximumDepthException('Path could not be found at a maximum traversal depth of '.$depth);
@@ -79,7 +79,7 @@ class PathResolver
     private function findRepositoriesForUserAndStore(User $user)
     {
         $repositories = $this->apiAdapter->getRepositoriesForUser($user);
-        if (empty($repositories)) {
+        if ($repositories->isEmpty()) {
             throw new NoRepositoriesException('Path could not be found as '.$user.' has no repositories to traverse');
         }
 

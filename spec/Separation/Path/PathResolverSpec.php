@@ -54,7 +54,6 @@ class PathResolverSpec extends ObjectBehavior
         $this->apiAdapter->getContributorsForRepository($repository)->willReturn(new Sequence([$user2]));
 
         $this->graphAdapter->storeRepositoriesAsContributedByUser($user1, $user1Repositories)->shouldBeCalled();
-        $this->graphAdapter->storeRepositoriesAsContributedByUser($user2, $user2Repositories)->shouldBeCalled();
         $this->graphAdapter->doesUserExist($user2)->willReturn(true);
         $this->graphAdapter->getShortestPathOfRepositoriesBetweenUsers($user1, $user2)->willReturn($user1Repositories);
 

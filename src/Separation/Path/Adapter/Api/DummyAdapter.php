@@ -20,6 +20,10 @@ class DummyAdapter implements AdapterInterface
         $this->repositoryFactory = $repositoryFactory;
     }
 
+    /**
+     * @param User $user
+     * @return Sequence
+     */
     public function getRepositoriesForUser(User $user)
     {
         $repositories = new Sequence();
