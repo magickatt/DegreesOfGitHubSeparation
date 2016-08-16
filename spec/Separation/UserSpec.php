@@ -8,16 +8,15 @@ use Prophecy\Argument;
 
 class UserSpec extends ObjectBehavior
 {
-    private $name = 'Archer';
+    private $username = 'archer';
 
     function let()
     {
-        $this->beConstructedWith($this->name);
+        $this->beConstructedWith($this->username);
     }
 
     function it_should_have_a_username()
     {
-        $this->getUsername()->shouldReturn($this->name);
-
+        $this->getUsername()->shouldReturn($this->username);
     }
 }
