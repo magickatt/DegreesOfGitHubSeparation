@@ -67,26 +67,9 @@ class PathResolver
 
         do {
 
-            $nextRepositories = new Map();
-            /** @var Repository $repository */
-            foreach ($currentRepositories as $repository) {
-
-                $users = $this->apiAdapter->getContributorsForRepository($repository);
-                $repository->setContributors($users);
-
-                foreach ($users as $user) {
-                    try {
-                        $nextRepositories->set($user->getUsername(), $this->findRepositoriesForUserAndStore($user));
-                    } catch (NoRepositoriesException $exception) {
-                        // Assuming there will be at least 1 user with repositories (if not NoPathException applies)
-                        continue;
-                    }
-                }
-
-                if ($this->graphAdapter->doesUserExist($user2)) {
-                    return $this->graphAdapter->getShortestPathOfRepositoriesBetweenUsers($user1, $user2);
-                }
-
+            $nextRepositories = $this->findContributorsAndTheirRepositories($currentRepositories);
+            if ($this->graphAdapter->doesUserExist($user2)) {
+                return $this->graphAdapter->getShortestPathOfRepositoriesBetweenUsers($user1, $user2);
             }
 
             $depth++;
@@ -98,6 +81,30 @@ class PathResolver
             throw new MaximumDepthException('Path could not be found at a maximum traversal depth of '.$depth);
         }
         throw new NoPathException('Path could not be found between '.$user1.' and '.$user2);
+    }
+
+    private function findContributorsAndTheirRepositories(Sequence $currentRepositories)
+    {
+        $nextRepositories = new Map();
+
+        /** @var Repository $repository */
+        foreach ($currentRepositories as $repository) {
+
+            $users = $this->apiAdapter->getContributorsForRepository($repository);
+            $repository->setContributors($users);
+
+            foreach ($users as $user) {
+                try {
+                    $nextRepositories->set($user->getUsername(), $this->findRepositoriesForUserAndStore($user));
+                } catch (NoRepositoriesException $exception) {
+                    // Assuming there will be at least 1 user with repositories (if not NoPathException applies)
+                    continue;
+                }
+            }
+
+        }
+
+        return $nextRepositories;
     }
 
     /**
