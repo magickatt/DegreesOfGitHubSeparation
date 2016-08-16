@@ -10,7 +10,7 @@
         "phpspec/phpspec": "3.0.*"
     },
     "autoload": {
-      "psr-4": {"Separation\\": "src/"}
+      "psr-4": {"Separation\\": "src/Separation/"}
     },
     "config": {
         "bin-dir": "bin/"

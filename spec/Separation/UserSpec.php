@@ -8,8 +8,16 @@ use Prophecy\Argument;
 
 class UserSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    private $name = 'Archer';
+
+    function let()
     {
-        $this->shouldHaveType(User::class);
+        $this->beConstructedWith($this->name);
+    }
+
+    function it_should_have_a_username()
+    {
+        $this->getUsername()->shouldReturn($this->name);
+
     }
 }

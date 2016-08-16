@@ -11,8 +11,8 @@ $application = new Silex\Application();
  */
 $application->get('/separation/{user1}/{user2}', function ($user1, $user2) {
 
-    $user1 = new \Separation\User();
-    $user2 = new \Separation\User();
+    $user1 = new \Separation\User($user1);
+    $user2 = new \Separation\User($user2);
 
     return "Hello $user1 and $user2";
 });
