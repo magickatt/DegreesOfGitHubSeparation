@@ -27,7 +27,11 @@ error_reporting(E_ALL);
  */
 $application->get('/separation/{user1}/{user2}', function ($user1, $user2) {
 
-    $api = new \Separation\Path\Api\Api(new UserFactory(), new RepositoryFactory(), new DummyApiAdapter());
+    $api = new \Separation\Path\Api\Api(
+        new UserFactory(),
+        new RepositoryFactory(),
+        new \Separation\Path\Api\Adapter\CacheableAdapter(new \Separation\Path\Api\Adapter\GitHubAdapter(new \Github\Client()))
+    );
     $storage = new \Separation\Path\Storage\Storage(new DummyGraphAdapter());
     $pathResolver = new PathResolver($api, $storage, new PathFactory());
 
