@@ -3,31 +3,31 @@
 namespace spec\Separation\Path;
 
 use PhpCollection\Sequence;
-use Separation\Path\Adapter\Api\AdapterInterface as ApiAdapterInterface;
-use Separation\Path\Adapter\Graph\AdapterInterface as GraphAdapterInterface;
+use Separation\Path\Api\Api;
 use Separation\Path\Path;
 use Separation\Path\Factory\PathFactory;
 use Separation\Path\PathResolver;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Separation\Path\Storage\Storage;
 use Separation\Repository;
 use Separation\User;
 
 class PathResolverSpec extends ObjectBehavior
 {
-    private $apiAdapter;
+    private $api;
 
-    private $graphAdapter;
+    private $graph;
 
     private $pathFactory;
 
-    function let(ApiAdapterInterface $apiAdapter, GraphAdapterInterface $graphAdapter, PathFactory $pathFactory)
+    function let(Api $api, Storage $storage, PathFactory $pathFactory)
     {
-        $this->apiAdapter = $apiAdapter;
-        $this->graphAdapter = $graphAdapter;
+        $this->api = $api;
+        $this->graph = $storage;
         $this->pathFactory = $pathFactory;
 
-        $this->beConstructedWith($apiAdapter, $graphAdapter, $pathFactory);
+        $this->beConstructedWith($api, $storage, $pathFactory);
     }
 
     function it_is_initializable()
@@ -49,13 +49,13 @@ class PathResolverSpec extends ObjectBehavior
         $user2Repositories = new Sequence();
         $this->pathFactory->create($user1, $user2, $user1Repositories)->willReturn(new Path($user1, $user2, $user1Repositories));
 
-        $this->apiAdapter->getRepositoriesForUser($user1)->willReturn($user1Repositories);
-        $this->apiAdapter->getRepositoriesForUser($user2)->willReturn($user2Repositories);
-        $this->apiAdapter->getContributorsForRepository($repository)->willReturn(new Sequence([$user2]));
+        $this->api->getRepositoriesForUser($user1)->willReturn($user1Repositories);
+        $this->api->getRepositoriesForUser($user2)->willReturn($user2Repositories);
+        $this->api->getContributorsForRepository($repository)->willReturn(new Sequence([$user2]));
 
-        $this->graphAdapter->storeRepositoriesAsContributedByUser($user1, $user1Repositories)->shouldBeCalled();
-        $this->graphAdapter->doesUserExist($user2)->willReturn(true);
-        $this->graphAdapter->getShortestPathOfRepositoriesBetweenUsers($user1, $user2)->willReturn($user1Repositories);
+        $this->graph->storeRepositoriesAsContributedByUser($user1, $user1Repositories)->shouldBeCalled();
+        $this->graph->doesUserExist($user2)->willReturn(true);
+        $this->graph->getShortestPathOfRepositoriesBetweenUsers($user1, $user2)->willReturn($user1Repositories);
 
         $this->resolvePathBetweenUsers($user1, $user2)->shouldBeAnInstanceOf('Separation\Path\Path');
     }

@@ -4,12 +4,12 @@ namespace Separation\Path;
 
 use PhpCollection\Map;
 use PhpCollection\Sequence;
-use Separation\Path\Adapter\Api\AdapterInterface as ApiAdapterInterface;
-use Separation\Path\Adapter\Graph\AdapterInterface as GraphAdapterInterface;
+use Separation\Path\Api\Api;
 use Separation\Path\Exception\MaximumDepthException;
 use Separation\Path\Exception\NoPathException;
 use Separation\Path\Exception\NoRepositoriesException;
 use Separation\Path\Factory\PathFactory;
+use Separation\Path\Storage\Storage;
 use Separation\Repository;
 use Separation\User;
 
@@ -18,25 +18,25 @@ class PathResolver
     /** @var int */
     private $maximumTraversalDepth = 10;
 
-    /** @var ApiAdapterInterface */
-    private $apiAdapter;
+    /** @var Api */
+    private $api;
 
-    /** @var GraphAdapterInterface */
-    private $graphAdapter;
+    /** @var Storage */
+    private $storage;
 
     /** @var PathFactory */
     private $pathFactory;
 
     /**
      * PathResolver constructor
-     * @param ApiAdapterInterface $apiAdapter
-     * @param GraphAdapterInterface $graphAdapter
+     * @param Api $api
+     * @param Storage $storage
      * @param PathFactory $pathFactory
      */
-    public function __construct(ApiAdapterInterface $apiAdapter, GraphAdapterInterface $graphAdapter, PathFactory $pathFactory)
+    public function __construct(Api $api, Storage $storage, PathFactory $pathFactory)
     {
-        $this->apiAdapter = $apiAdapter;
-        $this->graphAdapter = $graphAdapter;
+        $this->api = $api;
+        $this->storage = $storage;
         $this->pathFactory = $pathFactory;
     }
 
@@ -68,8 +68,8 @@ class PathResolver
         do {
 
             $nextRepositories = $this->findContributorsAndTheirRepositories($currentRepositories);
-            if ($this->graphAdapter->doesUserExist($user2)) {
-                return $this->graphAdapter->getShortestPathOfRepositoriesBetweenUsers($user1, $user2);
+            if ($this->storage->doesUserExist($user2)) {
+                return $this->storage->getShortestPathOfRepositoriesBetweenUsers($user1, $user2);
             }
 
             $depth++;
@@ -95,7 +95,7 @@ class PathResolver
         /** @var Repository $repository */
         foreach ($currentRepositories as $repository) {
 
-            $users = $this->apiAdapter->getContributorsForRepository($repository);
+            $users = $this->api->getContributorsForRepository($repository);
             $repository->setContributors($users);
 
             foreach ($users as $user) {
@@ -119,12 +119,12 @@ class PathResolver
      */
     private function findRepositoriesForUserAndStore(User $user)
     {
-        $repositories = $this->apiAdapter->getRepositoriesForUser($user);
+        $repositories = $this->api->getRepositoriesForUser($user);
         if ($repositories->isEmpty()) {
             throw new NoRepositoriesException('Path could not be found as '.$user.' has no repositories to traverse');
         }
 
-        $this->graphAdapter->storeRepositoriesAsContributedByUser($user, $repositories);
+        $this->storage->storeRepositoriesAsContributedByUser($user, $repositories);
         return $repositories;
     }
 

@@ -16,6 +16,7 @@ apt-get install php5.6 -y
 apt-get install php5.6-xml -y
 apt-get install php5.6-bcmath -y
 apt-get install php5.6-mbstring -y
+apt-get install php5.6-curl -y
 apt-get install openjdk-8-jdk -y
 apt-get install neo4j -y
 apt-get install zip -y
