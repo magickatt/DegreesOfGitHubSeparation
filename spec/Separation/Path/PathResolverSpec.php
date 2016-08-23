@@ -37,16 +37,12 @@ class PathResolverSpec extends ObjectBehavior
 
     function it_should_resolve_the_path_of_repositories_between_two_users()
     {
-        /*
-         * This is testing boundary interfaces and is therefore fragile and
-         * probably should be removed in favour of more Behat scenarios
-         */
-
         $user1 = new User('archer');
         $user2 = new User('lana');
         $repository = new Repository('archer/burgers');
         $user1Repositories = new Sequence([$repository]);
         $user2Repositories = new Sequence();
+
         $this->pathFactory->create($user1, $user2, $user1Repositories)->willReturn(new Path($user1, $user2, $user1Repositories));
 
         $this->api->getRepositoriesForUser($user1)->willReturn($user1Repositories);
